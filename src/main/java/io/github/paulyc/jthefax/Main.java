@@ -3,6 +3,7 @@ package io.github.paulyc.jthefax;
 import spark.Route;
 
 import static spark.Spark.post;
+import static spark.Spark.port;
 
 public class Main {
 
@@ -22,7 +23,7 @@ public class Main {
     // We will have a URL to the contents of the fax at this point
     private static Route faxReceived  = (request, response) -> {
         // log the URL of the PDF received in the fax
-        System.out.println(request.params(":mediaUrl"));
+        System.out.println(request.params(":MediaUrl"));
 
         // Respond with empty 200/OK to Twilio
         response.status(200);
@@ -30,6 +31,8 @@ public class Main {
     };
 
     public static void main(String[] args) {
+        port(3000);
+
         post("/fax/sent", faxSent);
 
         post("/fax/received", faxReceived);
